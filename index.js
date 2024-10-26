@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const RSSParser = require("rss-parser");
 const inquirer = require("inquirer").default;
 const fs = require("fs");
