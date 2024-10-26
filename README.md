@@ -18,7 +18,7 @@ To start the application, simply run the following command:
 feedbomb
 ```
 
-The CLI will prompt you to add your first CLI. Fill in the details and press enter to save it. Once added, you can select a feed to view articles from.
+The CLI will prompt you to add your first feed. Fill in the details and press enter to save it. Once added, you can select a feed to view articles from.
 
 ## License
 
