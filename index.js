@@ -22,16 +22,6 @@ const loadFeeds = () => {
 };
 
 const saveFeeds = () => {
-  if (fs.existsSync(configFilePath)) {
-    const data = fs.readFileSync(configFilePath);
-    const feedsData = JSON.parse(data);
-    if (!Array.isArray(feedsData)) {
-      console.error(
-        "The .feedbombrc file in your home directory is not in array format, possibly due to being used by another program."
-      );
-      process.exit(1);
-    }
-  }
   fs.writeFileSync(configFilePath, JSON.stringify(feeds, null, 2));
 };
 
@@ -51,6 +41,32 @@ const addFeed = async () => {
 
   feeds.push({ name: feedName, url: feedUrl });
   saveFeeds();
+};
+
+const manageFeeds = async () => {
+  if (feeds.length === 0) {
+    console.log("No feeds available to manage. Please add a feed.");
+    return;
+  }
+
+  const choices = feeds.map((feed) => ({
+    name: feed.name,
+    value: feed,
+    checked: true,
+  }));
+
+  const { selectedFeeds } = await inquirer.prompt([
+    {
+      type: "checkbox",
+      name: "selectedFeeds",
+      message: "Select feeds to keep:",
+      choices: choices,
+    },
+  ]);
+
+  feeds = selectedFeeds;
+  saveFeeds();
+  process.stdout.write("\x1Bc");
 };
 
 async function fetchFeed(url) {
@@ -74,7 +90,6 @@ async function fetchFeed(url) {
       };
     });
   } catch (error) {
-    console.error("There was an error while fetching the feed:", error.message);
     return [];
   }
 }
@@ -89,7 +104,7 @@ async function runRSSReader() {
     while (true) {
       const feedChoices = feeds
         .map((feed) => feed.name)
-        .concat("Add a new feed");
+        .concat(["Add a new feed", "Manage feeds"]);
 
       const { selectedFeed } = await inquirer.prompt([
         {
@@ -103,14 +118,21 @@ async function runRSSReader() {
       if (selectedFeed === "Add a new feed") {
         await addFeed();
         continue;
+      } else if (selectedFeed === "Manage feeds") {
+        await manageFeeds();
+        continue;
       }
 
       const feedUrl = feeds.find((feed) => feed.name === selectedFeed).url;
       const articles = await fetchFeed(feedUrl);
 
       if (articles.length === 0) {
-        console.log("This feed doesn't appear to have any articles.");
-        return;
+        console.log(
+          p.red(
+            "This feed doesn't appear to have any articles. Check that the URL exists."
+          )
+        );
+        process.exit(1);
       }
 
       let currentIndex = 0;
