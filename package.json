@@ -6,8 +6,8 @@
     "start": "node index.js"
   },
   "author": "George Stone",
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
+  "description": "Minimalistic, terminal-based RSS reader",
   "dependencies": {
     "inquirer": "^12.0.1",
     "jsdom": "^25.0.1",
