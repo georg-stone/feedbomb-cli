@@ -17,6 +17,9 @@ importers:
       open:
         specifier: ^10.1.0
         version: 10.1.0
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
       rss-parser:
         specifier: ^3.13.0
         version: 3.13.0
@@ -285,6 +288,9 @@ packages:
 
   parse5@7.2.0:
     resolution: {integrity: sha512-ZkDsAOcxsUMZ4Lz5fVciOehNcJ+Gb8gTzcA4yl3wnc273BAybYWrQ+Ks/OjCjSEpjvQkDSeZbybK9qj2VHHdGA==}
+
+  picocolors@1.1.1:
+    resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -711,6 +717,8 @@ snapshots:
   parse5@7.2.0:
     dependencies:
       entities: 4.5.0
+
+  picocolors@1.1.1: {}
 
   punycode@2.3.1: {}
 

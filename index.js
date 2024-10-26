@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { exec } = require("child_process");
 const { JSDOM } = require("jsdom");
+const p = require("picocolors");
 
 const parser = new RSSParser();
 const homeDir = require("os").homedir();
@@ -69,6 +70,7 @@ async function fetchFeed(url) {
         link: item.link,
         pubDate: item.pubDate,
         contentSnippet: cleanedHTML,
+        author: item.author,
       };
     });
   } catch (error) {
@@ -107,7 +109,7 @@ async function runRSSReader() {
       const articles = await fetchFeed(feedUrl);
 
       if (articles.length === 0) {
-        console.log("no articles found.");
+        console.log("This feed doesn't appear to have any articles.");
         return;
       }
 
@@ -117,13 +119,16 @@ async function runRSSReader() {
         const article = articles[currentIndex];
 
         console.clear();
-        console.log(`\n${selectedFeed}\n`);
+        console.log(`\n${p.bold(selectedFeed)}\n`);
         console.log(
-          `(${currentIndex + 1}/${articles.length}) ${article.title}`
+          `${p.green(`(${currentIndex + 1}/${articles.length})`)} ${
+            article.title
+          }`
         );
-        console.log(`Published on: ${article.pubDate}`);
+        console.log(`${p.italic(new Date(article.pubDate).toLocaleString())}`);
         console.log("\n" + article.contentSnippet);
-        console.log(`\nLink: ${article.link}`);
+        console.log(`\n${p.blue(`Link`)} ${article.link}`);
+        console.log(`\n${p.magenta("Author")} ${article.author}`);
         console.log("\n---\n");
 
         const { action } = await inquirer.prompt([
