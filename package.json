@@ -1,10 +1,10 @@
 {
   "name": "feedbomb",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "npx oxlint"
   },
   "author": "George Stone",
   "license": "MIT",
@@ -18,5 +18,15 @@
   },
   "bin": {
     "feedbomb": "index.js"
-  }
+  },
+  "keywords": ["rss", "reader", "terminal", "cli", "rss-reader"],
+  "homepage": "https://github.com/thingbomb/feedbomb-cli",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thingbomb/feedbomb-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thingbomb/feedbomb-cli/issues"
+  },
+  "preferGlobal": true
 }
